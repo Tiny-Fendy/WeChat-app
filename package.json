@@ -1,0 +1,32 @@
+{
+  "name": "wechat-app",
+  "version": "1.0.0",
+  "description": "WeChat app CMS",
+  "main": "app.js",
+  "scripts": {
+    "dev": "egg-bin dev",
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tiny-Fendy/WeChat-app.git"
+  },
+  "keywords": [
+    "egg",
+    "react",
+    "WeChat"
+  ],
+  "author": "feng di",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Tiny-Fendy/WeChat-app/issues"
+  },
+  "homepage": "https://github.com/Tiny-Fendy/WeChat-app#readme",
+  "dependencies": {
+    "egg": "^2.9.1",
+    "react": "^16.4.1"
+  },
+  "devDependencies": {
+    "egg-bin": "^4.7.1"
+  }
+}
