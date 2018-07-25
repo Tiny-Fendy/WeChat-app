@@ -4,8 +4,8 @@
   "description": "WeChat app CMS",
   "main": "app.js",
   "scripts": {
-    "dev": "egg-bin dev",
-    "test": "npm test"
+    "dev": "egg-bin dev --port 3001",
+    "test": "egg-bin test"
   },
   "repository": {
     "type": "git",
@@ -24,9 +24,12 @@
   "homepage": "https://github.com/Tiny-Fendy/WeChat-app#readme",
   "dependencies": {
     "egg": "^2.9.1",
+    "egg-view-nunjucks": "^2.2.0",
+    "koa": "^2.5.2",
     "react": "^16.4.1"
   },
   "devDependencies": {
-    "egg-bin": "^4.7.1"
+    "egg-bin": "^4.7.1",
+    "egg-mock": "^3.17.3"
   }
 }
