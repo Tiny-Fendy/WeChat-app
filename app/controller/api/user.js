@@ -1,10 +1,22 @@
 const Controller = require('egg').Controller;
 
 class IndexController extends Controller {
+    methods() {
+        return {
+            login: 'get',
+            logout: 'post',
+            getUserInfo: 'get'
+        }
+    }
 
     // 登陆
     async login(res, req) {
-
+        this.ctx.body = {
+            errorCode: 10001,
+            success: false,
+            message: '登陆失败',
+            data: null
+        }
     }
 
     // 登出
