@@ -1,8 +1,9 @@
 module.exports = app => {
     const { router, controller } = app;
 
-    // console.log(controller.page);
+    for (const [filename, content] of Object.entries(controller.page)) {
+        router.get(`/${filename}`, content.index);
+    }
 
-    router.get('/home', controller.page.home.index);
-    router.get('/login', controller.page.login.index);
+    router.get('/', controller.page.home.index);
 };
