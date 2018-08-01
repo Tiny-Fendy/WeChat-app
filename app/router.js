@@ -1,7 +1,4 @@
 module.exports = app => {
-    const { router, controller } = app;
-
-    router.get('/', controller.user.index);
-    router.get('/api/getList', controller.user.getList);
-    router.post('/api/setList', controller.user.setList);
+    require('./router/page')(app);
+    require('./router/api/login')(app);
 };
