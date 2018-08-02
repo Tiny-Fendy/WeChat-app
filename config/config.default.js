@@ -10,4 +10,9 @@ module.exports = {
             '.ejs': 'nunjucks',
         },
     },
+    security: {
+        csrf: {
+            enable: false,
+        },
+    }
 };

@@ -10,7 +10,7 @@ class IndexController extends Controller {
     }
 
     // 登陆
-    async login(res, req) {
+    async login() {
         this.ctx.body = {
             errorCode: 10001,
             success: false,
@@ -21,13 +21,27 @@ class IndexController extends Controller {
 
     // 登出
     async logout() {
+        const { request: { body }, cookies } = this.ctx;
 
+        console.log(body);
+        this.ctx.body = {
+            success: true
+        }
     }
 
     async getUserInfo(res, req) {
         const { cookies } = this.ctx;
 
         const userId = cookies.get('userId');
+
+        this.ctx.body = {
+            errorCode: 70000,
+            message: '',
+            success: true,
+            data: {
+                rows: []
+            }
+        }
 
     }
 }

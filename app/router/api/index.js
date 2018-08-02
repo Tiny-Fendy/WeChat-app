@@ -11,6 +11,9 @@ module.exports = app => {
             // 一个hack的方法，防止egg内部的this.app.config.controller报错
             file.methods.call({app: {config: {}}}).then(methods => {
                 for (const [key, method] of Object.entries(methods)) {
+                    if (method === 'post') {
+                        console.log(key, file[key]);
+                    }
                     router[method](`/api/${filename}/${key}`, file[key]);
                 }
             });
