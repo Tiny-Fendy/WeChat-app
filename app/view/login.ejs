@@ -1,6 +1,11 @@
 <link rel="stylesheet" type="text/css" href="/public/css/login.css">
 <div>欢迎登陆后台管理系统</div>
 
+<input class="username" type="text" placeholder="请输入用户名">
+<input class="password" type="password" placeholder="请输入密码">
+
+<a type="button" onclick="submit()">登陆</a>
+
 <script>
     let cookie = function () {
         let c = document.cookie;
@@ -16,11 +21,23 @@
         }
     }();
 
-    fetch('http://localhost:3001/api/user/logout', {
-        method: 'POST',
-        body: JSON.stringify({ a: 232424 })
-    }).then(async res => {
-        const response = await res.json();
-        console.log(response);
-    });
+    function submit() {
+        const username = document.querySelector('.username').value;
+        const password = document.querySelector('.password').value;
+
+        console.log(username, password);
+        fetch('/api/user/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                username,
+                password
+            })
+        }).then(async res => {
+            const response = await res.json();
+            console.log(response);
+        });
+    }
 </script>

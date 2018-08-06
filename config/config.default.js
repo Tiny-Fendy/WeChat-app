@@ -1,6 +1,6 @@
 module.exports = {
     keys: 'WeChat',
-    middleware: ['log'],
+    middleware: [],
 
     // 模板配置
     view: {
@@ -10,9 +10,4 @@ module.exports = {
             '.ejs': 'nunjucks',
         },
     },
-    security: {
-        csrf: {
-            enable: false,
-        },
-    }
 };

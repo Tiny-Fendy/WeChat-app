@@ -3,18 +3,22 @@ const Controller = require('egg').Controller;
 class IndexController extends Controller {
     methods() {
         return {
-            login: 'get',
+            login: 'post',
             logout: 'post',
             getUserInfo: 'get'
         }
     }
 
     // 登陆
-    async login() {
+    async login(req) {
+        const { cookies, request, service } = this.ctx;
+
+        console.log(request.body);
+
         this.ctx.body = {
             errorCode: 10001,
             success: false,
-            message: '登陆失败',
+            message: `登陆失败`,
             data: null
         }
     }
@@ -23,7 +27,6 @@ class IndexController extends Controller {
     async logout() {
         const { request: { body }, cookies } = this.ctx;
 
-        console.log(body);
         this.ctx.body = {
             success: true
         }
@@ -31,18 +34,26 @@ class IndexController extends Controller {
 
     async getUserInfo(res, req) {
         const { cookies } = this.ctx;
+        const sessionId = cookies.get('sessionId');
 
-        const userId = cookies.get('userId');
-
-        this.ctx.body = {
-            errorCode: 70000,
-            message: '',
-            success: true,
-            data: {
-                rows: []
+        if (sessionId) {
+            this.ctx.body = {
+                errorCode: 70000,
+                message: '',
+                success: true,
+                data: {
+                    userId: '12031023903',
+                    username: 'kk'
+                }
+            }
+        } else {
+            this.ctx.body = {
+                errorCode: 70001,
+                message: '用户未登录',
+                success: false,
+                data: null
             }
         }
-
     }
 }
 
