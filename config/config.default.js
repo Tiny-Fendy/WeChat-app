@@ -1,6 +1,6 @@
 module.exports = {
     keys: 'WeChat',
-    middleware: [],
+    middleware: ['log'],
 
     // 模板配置
     view: {

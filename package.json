@@ -5,7 +5,9 @@
   "main": "app.js",
   "scripts": {
     "dev": "egg-bin dev --port 3001",
-    "test": "egg-bin test"
+    "test": "egg-bin test",
+    "start": "egg-scripts start --port=3001 --daemon --title=WeChat-Sleep-Server",
+    "stop": "egg-scripts stop"
   },
   "repository": {
     "type": "git",
@@ -27,6 +29,7 @@
     "egg-view-nunjucks": "^2.2.0",
     "koa": "^2.5.2",
     "moment": "^2.22.2",
+    "mongodb": "^3.1.4",
     "react": "^16.4.1"
   },
   "devDependencies": {

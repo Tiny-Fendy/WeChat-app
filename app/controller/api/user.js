@@ -1,6 +1,6 @@
 const Controller = require('egg').Controller;
 
-class IndexController extends Controller {
+class UserController extends Controller {
     methods() {
         return {
             login: 'post',
@@ -10,22 +10,20 @@ class IndexController extends Controller {
     }
 
     // 登陆
-    async login(req) {
-        const { cookies, request, service } = this.ctx;
-
-        console.log(request.body);
-
+    async login() {
         this.ctx.body = {
-            errorCode: 10001,
+            errorCode: 10000,
             success: false,
-            message: `登陆失败`,
+            message: `登陆成功`,
             data: null
         }
     }
 
     // 登出
-    async logout() {
+    async logout({ res, req }) {
         const { request: { body }, cookies } = this.ctx;
+
+        console.log('body', res.body, req.body);
 
         this.ctx.body = {
             success: true
@@ -57,4 +55,4 @@ class IndexController extends Controller {
     }
 }
 
-module.exports = IndexController;
+module.exports = UserController;
