@@ -10,4 +10,11 @@ module.exports = {
             '.ejs': 'nunjucks',
         },
     },
+
+    mongodb: {
+        clients: {
+            hostname: 'localhost',
+            port: '27017'
+        }
+    }
 };

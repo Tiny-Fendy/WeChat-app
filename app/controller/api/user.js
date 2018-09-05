@@ -11,19 +11,22 @@ class UserController extends Controller {
 
     // 登陆
     async login() {
+        const db = await this.app.db();
+        const list = db.find().toArray();
+
         this.ctx.body = {
             errorCode: 10000,
             success: false,
             message: `登陆成功`,
-            data: null
+            data: {
+                list
+            }
         }
     }
 
     // 登出
     async logout({ res, req }) {
         const { request: { body }, cookies } = this.ctx;
-
-        console.log('body', res.body, req.body);
 
         this.ctx.body = {
             success: true
