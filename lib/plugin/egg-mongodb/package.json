@@ -1,0 +1,5 @@
+{
+  "egg-mongodb": {
+    "name": "db"
+  }
+}
