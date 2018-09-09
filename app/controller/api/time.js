@@ -9,8 +9,15 @@ class IndexController extends Controller {
         }
     }
 
+    /**
+     * time: YYYY-MM-DD HH:mm
+     * */
     async markTime() {
         const { request: { body } } = this.ctx;
+        const { userId, time } = body;
+
+        const db = await this.app.db();
+        const result = await db.update({});
 
         this.ctx.body = {
             code: 10000,
