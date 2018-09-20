@@ -11,20 +11,11 @@ class UserController extends Controller {
 
     // 登陆
     async login() {
-        const { config } = this.app;
-        const { request: { body }, cookies } = this.ctx;
-        const { code } = body;
+        const { request: { body } } = this.ctx;
+        const { code, userInfo } = body;
 
         // 获取AppID
-        const result = await this.ctx.curl('https://api.weixin.qq.com/sns/jscode2session', {
-            method: 'GET',
-            data: {
-                appid: config.appid,
-                secret: config.secret,
-                js_code: code,
-                grant_type: 'authorization_code'
-            }
-        }).then(res => JSON.parse(res.data.toString()));
+        const result = await this.ctx.service.user.getAppId(code);
 
         // 存入session
         this.ctx.session.session_key = result.session_key;
@@ -32,18 +23,17 @@ class UserController extends Controller {
 
         // 查询数据库，若无该账号，则初始化值
         const db = await this.app.db();
-        const userInfo = await db.find({ usrId: result.openid });
+        const user = await db.findOne({ userId: result.openid }, { projection: { '_id': false } });
 
-        if (!userInfo) {
-            await db.insert({ usrId: result.openid, list: [] })
+        if (!user) {
+            await db.insert({ userId: result.openid, userInfo, list: [] });
         }
-
 
         this.ctx.body = {
             errorCode: 70000,
             success: true,
             message: `登陆成功`,
-            data: null
+            data: user
         }
     }
 

@@ -10,6 +10,7 @@ module.exports = options => async (ctx, next) => {
     const time = now.toLocaleTimeString();
 
     console.log('================');
+    console.log(`Referer：${request.header.referer}`);
     console.log(`Time: ${date} ${time}`);
     console.log(`URL: ${url}`);
     console.log(`METHOD: ${method}`);

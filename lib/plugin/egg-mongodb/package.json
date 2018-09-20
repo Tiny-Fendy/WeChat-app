@@ -1,5 +1,5 @@
 {
-  "egg-mongodb": {
+  "eggPlugin": {
     "name": "db"
   }
 }

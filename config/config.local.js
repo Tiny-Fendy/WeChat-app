@@ -1,3 +1,5 @@
 exports.security = {
-    domainWhiteList:['.servicewechat.com']
+    domainWhiteList:['.servicewechat.com'],
 };
+
+exports.allowRefer = 'https://servicewechat.com';
