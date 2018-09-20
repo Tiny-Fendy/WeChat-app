@@ -4,7 +4,6 @@ class UserController extends Controller {
     methods() {
         return {
             login: 'post',
-            logout: 'post',
             getUserInfo: 'get'
         }
     }
@@ -14,56 +13,43 @@ class UserController extends Controller {
         const { request: { body } } = this.ctx;
         const { code, userInfo } = body;
 
-        // 获取AppID
-        const result = await this.ctx.service.user.getAppId(code);
+        try {
+            // 获取AppID
+            const { openid, session_key } = await this.ctx.service.user.getAppId(code);
 
-        // 存入session
-        this.ctx.session.session_key = result.session_key;
-        this.ctx.session.openid = result.openid;
+            // 存入session
+            this.ctx.session.session_key = session_key;
+            this.ctx.session.openid = openid;
 
-        // 查询数据库，若无该账号，则初始化值
-        const db = await this.app.db();
-        const user = await db.findOne({ userId: result.openid }, { projection: { '_id': false } });
+            // 查询数据库，若无该账号，则初始化值
+            const db = await this.app.db();
+            const user = await db.findOne({ userId: openid });
+            if (!user) {
+                await db.insertOne({ userId: openid, userInfo, list: [] });
+            }
 
-        if (!user) {
-            await db.insert({ userId: result.openid, userInfo, list: [] });
-        }
-
-        this.ctx.body = {
-            errorCode: 70000,
-            success: true,
-            message: `登陆成功`,
-            data: user
-        }
-    }
-
-    // 登出
-    async logout({ res, req }) {
-        this.ctx.body = {
-            success: true
+            this.ctx.body = {
+                errorCode: 70000,
+                success: true,
+                message: '登陆成功'
+            }
+        } catch (e) {
+            this.ctx.body = {
+                errorCode: 70001,
+                success: false,
+                message: `登陆失败: ${e}`
+            }
         }
     }
 
     async getUserInfo(res, req) {
-        const { cookies } = this.ctx;
-        const sessionId = cookies.get('sessionId');
-        const db = await this.app.db();
-        const list = await db.find({}, { projection: { '_id': false } }).toArray();
+        const userInfo = await this.ctx.user.getInfo();
 
-        if (sessionId) {
-            this.ctx.body = {
-                errorCode: 70000,
-                message: '',
-                success: true,
-                data: { list }
-            }
-        } else {
-            this.ctx.body = {
-                errorCode: 70001,
-                message: '用户未登录',
-                success: false,
-                data: null
-            }
+        this.ctx.body = {
+            errorCode: 70000,
+            message: '',
+            success: true,
+            data: userInfo
         }
     }
 }

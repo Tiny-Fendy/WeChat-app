@@ -16,7 +16,6 @@ module.exports = options => async (ctx, next) => {
     console.log(`METHOD: ${method}`);
     console.log(method === 'GET' ? `query: ${JSON.stringify(query)}` : `body: ${JSON.stringify(body)}`);
     console.log(`options: ${JSON.stringify(options)}`);
-    console.log('');
 
     await next();
 };

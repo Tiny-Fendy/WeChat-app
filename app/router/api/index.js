@@ -6,8 +6,6 @@
 module.exports = app => {
     const { router, controller } = app;
 
-    router.post('/api/user/logout', controller.api.user.logout);
-
     for (const [filename, file] of Object.entries(controller.api)) {
         if (typeof file.methods === 'function') {
             // 一个hack的方法，防止egg内部的this.app.config.controller报错

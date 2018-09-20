@@ -19,7 +19,6 @@ class IndexController extends Controller {
                 message: '未知来源'
             }
         }
-
     }
 }
 
