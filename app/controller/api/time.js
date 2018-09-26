@@ -1,6 +1,8 @@
 const moment = require('moment');
 const { Controller } = require('egg');
 
+const mon = ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'];
+
 class IndexController extends Controller {
     methods() {
         return {
@@ -49,7 +51,7 @@ class IndexController extends Controller {
 
     // 获取指定天的信息
     async getDay() {
-        const data = await this.ctx.user.getInfo();
+        const data = await this.ctx.service.user.getInfo();
         const date = moment().format('YYYY-MM-DD');
 
         this.ctx.body = {
@@ -61,13 +63,42 @@ class IndexController extends Controller {
     }
 
     async getList() {
-        const { list } = await this.ctx.user.getInfo();
+        let { list = [] } = await this.ctx.service.user.getInfo();
+        let data = [];
+
+        list.forEach(({ date, time, isBeforeDawn }) => {
+            const [year, month, day] = date.split('-');
+            const dayItem = { day, date, time, isBeforeDawn };
+
+            // 查找年
+            let y = data.find(yItem => yItem.year === year);
+
+            if (!y) {
+                y = {
+                    year,
+                    list: [{ month, title: mon[Number(month - 1)], list: [dayItem] }]
+                };
+                data.push(y);
+            } else {
+                // 查找月
+                let m = y.list.find(mItem => mItem.month = month);
+
+                if (!m) {
+                    m = { month, list: [dayItem] };
+                    y.list.push(m);
+                } else {
+                    // 查找天
+                    let d = m.list.find(dItem => dItem.day === day);
+                    if (!d) m.list.push(dayItem);
+                }
+            }
+        });
 
         this.ctx.body = {
             errorCode: 10000,
             success: true,
             message: '',
-            data: { list }
+            data
         }
     }
 }

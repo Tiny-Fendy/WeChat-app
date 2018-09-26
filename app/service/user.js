@@ -21,6 +21,6 @@ module.exports = class UserService extends Service {
         const { openid } = this.ctx.session;
         const db = await this.app.db();
 
-        return db.find(Object.assign({ userId: openid }, filter), { projection: { '_id': false } });
+        return await db.findOne(Object.assign({ userId: openid }, filter), { projection: { '_id': false } });
     }
 };
