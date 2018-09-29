@@ -13,13 +13,6 @@ module.exports = {
         },
     },
 
-    mongodb: {
-        clients: {
-            hostname: 'localhost',
-            port: '27017'
-        }
-    },
-
     session: {
         key: 'wechat_sleep',
     }
